@@ -5,14 +5,10 @@ from ai_service import ask_ai
 
 app = FastAPI()
 
-# CORS configuration
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:5173",
-        "https://smart-ai-assistant-io4g.vercel.app",
-    ],
-    allow_credentials=True,
+    allow_origins=["*"],
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -32,9 +28,18 @@ def home():
 
 @app.post("/api/assistant")
 def assistant(request: AssistantRequest):
-    answer = ask_ai(request.text, request.task)
+    try:
+        answer = ask_ai(request.text, request.task)
 
-    return {
-        "success": True,
-        "answer": answer
-    }
+        return {
+            "success": True,
+            "answer": answer
+        }
+
+    except Exception as e:
+        print("AI ERROR:", e)
+
+        return {
+            "success": False,
+            "answer": "⚠️ The AI service is temporarily unavailable because the Gemini API quota has been exceeded. Please try again later."
+        }
