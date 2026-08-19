@@ -2,20 +2,25 @@
   "version": 2,
   "builds": [
     {
-      "src": "frontend/**",
+      "src": "frontend",
       "use": "@vercel/static-build",
       "config": {
         "distDir": "dist"
       }
+    },
+    {
+      "src": "api/assistant.py",
+      "use": "@vercel/python"
     }
   ],
   "routes": [
     {
+      "src": "/api/(.*)",
+      "dest": "/api/assistant.py"
+    },
+    {
       "src": "/(.*)",
       "dest": "/frontend/index.html"
     }
-  ],
-  "buildCommand": "cd frontend && npm install && npm run build",
-  "outputDirectory": "frontend/dist",
-  "installCommand": "npm install"
+  ]
 }
