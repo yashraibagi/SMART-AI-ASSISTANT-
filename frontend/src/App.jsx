@@ -104,7 +104,7 @@ function App() {
 
     try {
       const response = await fetch(
-        "http://127.0.0.1:8000/api/assistant",
+        "https://smart-ai-assistant-backend-75ey.onrender.com/api/assistant",
         {
           method: "POST",
           headers: {
