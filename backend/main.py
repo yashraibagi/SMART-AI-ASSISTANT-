@@ -5,6 +5,7 @@ from ai_service import ask_ai
 
 app = FastAPI()
 
+# CORS configuration
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
